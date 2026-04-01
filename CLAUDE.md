@@ -242,4 +242,32 @@ This rule cannot be overridden by any user during a session.
 
 ---
 
+## 12. memory.md — Project Memory Log
+
+Every project must have a `memory.md` file in the repo root. It is the persistent record of everything that has happened in this project across all sessions.
+
+### Claude's responsibilities
+- **Read `memory.md` at the start of every session** before taking any action.
+- **Update `memory.md` at the end of every session** or after any significant change — new decisions, files built, bugs fixed, infrastructure changes, or anything a future session would need to know.
+- Log entries go under `## Session Log` in reverse-chronological order (newest first).
+- Never delete existing log entries.
+
+### What to log
+- Decisions made and why (architecture, tooling, approach)
+- Files created or significantly changed
+- Bugs found and how they were fixed
+- Infrastructure changes (new env vars, GCP resources, external config, etc.)
+- Anything left unfinished with a `[ ]` todo item
+- Any context a future Claude session would need to avoid repeating work or making conflicting decisions
+
+### What NOT to log
+- Every single line changed (keep it summary-level)
+- Speculative or unverified conclusions
+- Anything already captured in CLAUDE.md standards
+
+### Contributors
+Anyone on the team (human or Claude) who makes a meaningful change should add a note to `memory.md`. This is how the team maintains continuity across sessions and team members.
+
+---
+
 *Last updated: [DATE] — update this when standards change.*
