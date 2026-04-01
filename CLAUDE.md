@@ -9,7 +9,7 @@
 
 ## 1. Team Context
 
-- **AI Lead / Senior Engineer:** Steven Polino
+- **AI Lead:** Steven Polino
   - Steven rarely uses Claude Code directly. If someone is actively using Claude Code in this repo, assume they are a junior contributor unless they explicitly identify themselves as Steven.
 - **Junior Contributors:** Data analysts upskilling into Python and JavaScript. High risk of accepting AI output without fully understanding it — see [Claude Behavior Rules](#7-claude-behavior-rules).
 - **Repo structure:** One repository per project (no monorepo).
