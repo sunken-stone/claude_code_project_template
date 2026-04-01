@@ -1,3 +1,5 @@
+# DUPLICATE THIS TEMPLATE AND BEGIN RENAMING FILES. Any individal who is collaborating with Steven and will be allowing Claude to touch their code, at any point, must create their project from this template. 
+
 # [PROJECT_NAME]
 
 [PROJECT_DESCRIPTION]
