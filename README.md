@@ -1,4 +1,6 @@
-# DUPLICATE THIS TEMPLATE AND BEGIN RENAMING FILES. 
+# DUPLICATE THIS TEMPLATE IN VSCODE AND ACTIVATE CLAUDE IN A TERMINAL.
+Make sure to follow the RESOURCE.md guide on how to begin a project - https://github.com/sunken-stone/claude_code_project_template/blob/main/RESOURCE.md
+
 # Any individal who is collaborating with Steven and will be allowing Claude to touch their code, at any point, must create their project from this template. 
 
 You can reference the SlackSDK_Recap_Agent project for more information on how to build a claude_code_project
@@ -13,21 +15,24 @@ claude_code must be included at the end of every project that claude is involved
 
 ## Getting Started
 
-### 1. Clone and set up environment
+### 1. Follow the RESOURCE.md file on how to begin the project with Claude
+File here: https://github.com/sunken-stone/claude_code_project_template/blob/main/RESOURCE.md
+
+### 2. Clone and set up environment
 ```bash
 python -m venv .venv
 source .venv/Scripts/activate  # Windows
 # source .venv/bin/activate    # Mac/Linux
 pip install -r requirements.txt
-```
+```  
 
-### 2. Configure environment variables
+### 3. Configure environment variables
 ```bash
 cp .env.example .env
 # Fill in .env with real values — never commit this file
 ```
 
-### 3. Run the app
+### 4. Run the app
 ```bash
 python app.py
 ```
