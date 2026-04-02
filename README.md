@@ -1,6 +1,11 @@
-# DUPLICATE THIS TEMPLATE AND BEGIN RENAMING FILES. Any individal who is collaborating with Steven and will be allowing Claude to touch their code, at any point, must create their project from this template. 
+# DUPLICATE THIS TEMPLATE AND BEGIN RENAMING FILES. 
+# Any individal who is collaborating with Steven and will be allowing Claude to touch their code, at any point, must create their project from this template. 
 
-# [PROJECT_NAME]
+You can reference the SlackSDK_Recap_Agent project for more information on how to build a claude_code_project
+https://github.com/sunken-stone/SlackSDK_Recap_Agent/blob/main/README.md
+
+# [Project_Name_claude_code]
+claude_code must be included at the end of every project that claude is involved in generating code for.
 
 [PROJECT_DESCRIPTION]
 
