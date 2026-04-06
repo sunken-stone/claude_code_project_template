@@ -297,6 +297,7 @@ INPUT=$(cat)
 SESSION_ID=$(echo "$INPUT" | jq -r '.session_id')
 if [ -n "$SESSION_ID" ] && [ "$SESSION_ID" != "null" ]; then
   echo "claude --resume $SESSION_ID" > claude_resume
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)  claude --resume $SESSION_ID" >> claude_session_log
 fi
 ```
 
@@ -339,11 +340,10 @@ claude --resume <session_id>
 ```
 
 ### Rules
-- `claude_resume` must be listed in `.gitignore` — it is machine-specific and must never be committed.
+- `claude_resume` and `claude_session_log` must be listed in `.gitignore` — they are machine-specific and must never be committed.
 - The hook script (`.claude/hooks/save_session.sh`) and settings (`.claude/settings.json`) **should** be committed so all contributors get session resumption automatically.
 - `jq` must be installed for the hook to work (`brew install jq` / `apt install jq`).
 
 ---
-
 *Last updated: 2026-04-06*
 *Last updated: [DATE] — update this when standards change.*
