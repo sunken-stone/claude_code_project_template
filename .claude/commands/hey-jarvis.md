@@ -7,7 +7,7 @@ Launches the Jarvis sub-agent (defined in `.claude/agents/jarvis.md`) via the Ag
 Jarvis will:
 
 1. Update `.claude/jarvis_ledger.json` `current_planning_session_id` to mark a new planning session
-2. Announce itself with `🎩 Jarvis is tuned in and keeping track.`
+2. Announce itself with `🤖 Jarvis is tuned in and keeping track.`
 3. Read the current state of `memory.md`, `next_steps.md`, `planning/PLAN.md`, `planning/changelog.md`, `planning/explanation.md`
 4. Stand ready to capture decisions, reminders, and open questions as they're agreed in this planning session
 5. Return status lines (or just the "tuned in" line if no immediate work to do)
