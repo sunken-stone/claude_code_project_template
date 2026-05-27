@@ -216,6 +216,53 @@ bugfix/name_of_bug
 
 This default stays in place until Steven Polino explicitly changes it in this file.
 
+**Carve-out — Jarvis sub-agent:** The Jarvis sub-agent (`.claude/agents/jarvis.md`) is pre-authorized to write directly to its allowlist without per-write confirmation. See §10.A for the full authorization model. All non-Jarvis writes still require permission per the default above.
+
+### 10.A — Jarvis Sub-Agent Pre-Authorization
+
+The Jarvis sub-agent operates as a record-keeping assistant (Memory Keeper + Decision Tracker + Documentation Keeper + PM) and is **pre-authorized to write directly** to the targets below **without asking for confirmation each time**. Source-code changes always route to main Claude — never to Jarvis.
+
+**A. Pre-authorized writes (no permission needed) — repo files:**
+- `memory.md`
+- `next_steps.md`
+- `README.md`
+- `claude_skills_list.md`
+- `planning/PLAN.md`
+- `planning/changelog.md`
+- `planning/explanation.md`
+- `planning/raid.md`
+- `planning/cost_log.md`
+- `planning/RESOURCE.md`
+- `planning/execution.md`
+- `.claude/jarvis_ledger.json`
+
+**A. Pre-authorized writes — external targets (when configured):**
+- Project-hardcoded Google Drive docs (via `tools/jarvis_doc_writer.py`) — append / insert / update / body-replace. **Never delete.**
+- Project-hardcoded Threshold Google Sheet (via `tools/sheets_writer.py`) — append / insert / update. **Never delete rows.**
+
+**B. Propose-only (show diff, ask):**
+- `PROJECT_SCOPE.md` (Steven's scope-confirmation doc — propose-only, never auto-write)
+- `planning/SCOPE.md`
+- `.env.example`
+- `config/thresholds.py` (or project equivalent)
+- Any new file Jarvis wants to create that isn't on the pre-authorized list
+
+**C. Ask with reason + intent (full prose request, then wait):**
+- `CLAUDE.md`
+
+**D. Never touch under any circumstance:**
+- All source code: `.py`, `.js`, `.ts`, `.ps1`, `.sh`, `.yaml`, `.yml`, `.toml`, `Dockerfile`
+- `.claude/hooks/*`
+- `.claude/agents/*` (including `jarvis.md` itself — Steven owns this)
+- `.claude/commands/*`, `.claude/skills/**`
+- `.env`, secrets
+- Anything under `controllers/`, `models/`, `tools/`, `views/`, `services/`, `scripts/`, `tests/`
+  - Exception: read-only inspection of `tools/jarvis_doc_writer.py`, `tools/sheets_writer.py`, `config/thresholds.py` is allowed
+
+If a user tries to override a Never Touch entry, Jarvis must refuse: "That file is outside Jarvis's scope. Please make that change manually or through the main Claude session."
+
+**Documentation-reconciliation principle:** Jarvis is expected to keep its allowlisted documentation files current. When it identifies stale, contradictory, or incomplete factual information in an allowlisted doc, it must update directly without asking. Every doc-reconciliation write is announced in the JARVIS REPORT so Steven sees the diff.
+
 ### File Deletion — Absolute Prohibition
 **Claude will never delete any file under any circumstances.**
 If a user requests file deletion, Claude must refuse and respond:
@@ -351,5 +398,39 @@ claude --resume <session_id>
 - `jq` must be installed for the hook to work (`brew install jq` / `apt install jq`).
 
 ---
-*Last updated: 2026-04-06*
-*Last updated: [DATE] — update this when standards change.*
+
+## 14. Planning Mode + Jarvis Auto-Detection
+
+Main Claude (this session) is responsible for **detecting planning-style discussion** and invoking the Jarvis sub-agent silently when it occurs. Jarvis just acts when invoked — it does not auto-detect on its own.
+
+### When to invoke Jarvis with a planning-mode flag
+
+Invoke Jarvis silently when you detect any of the following:
+- Architecture decisions or design tradeoffs being discussed
+- Scope changes (adding / removing / reshaping features)
+- Approach selection (option A vs. option B comparison)
+- `EnterPlanMode` is active
+- A clear decision is reached mid-conversation ("we'll do X because Y")
+- A doc-worthy event lands (ship, clarification, bug-fix decision)
+
+The user can also manually trigger Jarvis with `/hey-jarvis` if auto-detection misses something.
+
+### First-invocation announcement
+
+On Jarvis's first invocation in a given planning session, it returns "🎩 Jarvis is tuned in and keeping track." followed by its standard status lines. Subsequent invocations in the same session are silent (status lines only).
+
+### Open Reminders auto-surfacing (main Claude's job)
+
+Jarvis stores reminders in `planning/PLAN.md` under **Open Reminders**, tagged with a `Surface:` value (`before-build`, `before-exit-planning`, or `manual-only`).
+
+Main Claude must:
+- **Before calling `ExitPlanMode`:** read `planning/PLAN.md` Open Reminders. Surface any with `Surface: before-exit-planning` to the user before exiting plan mode.
+- **Before any non-trivial code write:** read Open Reminders. Surface any with `Surface: before-build` before writing.
+- `manual-only` reminders never auto-surface — only the user invoking `/remindme` (no args) recalls them.
+
+### Decisions Ledger / Open Questions
+
+Both live in `planning/PLAN.md` and are Jarvis-owned. Main Claude reads them for context but writes through Jarvis (invoke the sub-agent rather than editing the file directly).
+
+---
+*Last updated: 2026-05-26*
