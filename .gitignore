@@ -33,3 +33,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Claude Code — machine-specific state (do not commit)
+.claude/jarvis_ledger.json
+claude_resume
+claude_session_log
+jarvis_pending
